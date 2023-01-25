@@ -8,77 +8,79 @@ const buttonSubmit = document.getElementById('create');
 const inputFile = document.getElementById('inputFile');
 const erreurs = {};
 
-
+// Fonction de validation champs====================================================================
 function validPrenom(){
-    let prenom =form.elements.prenom.value
-    if (prenom.length < 3) {
-        if (prenom.length === 0) {
-            document.getElementById("prenom").style.borderColor = "";
-            document.getElementById("prenomErr").style.color=""
-            document.getElementById("prenomErr").innerHTML = "";
-          }else{
-        document.getElementById("prenom").style.borderColor = "red";
-        document.getElementById("prenomErr").style.color="red"
-        document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec plus de 3 caractères</p>`;
-        Object.defineProperty(erreurs, 'prenom', {
-            value: 'renseigner un prenom avec plus de 3 caractères',
-            writable : true,
-            enumerable : true,
-            configurable : true
-        });
-    }
-    }else if (nom.length > 50) {
-        document.getElementById("prenom").style.borderColor = "red";
-        document.getElementById("prenomErr").style.color="red"
-        document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec moin de 50 caractères</p>`;
-        Object.defineProperty(erreurs, 'prenom', {
-            value: "renseigner un prenom avec moin de 50 caractères",
-            writable : true,
-            enumerable : true,
-            configurable : true
-        });
-
+  let prenom =form.elements.prenom.value
+  if (prenom.length < 3) {
+    if (prenom.length === 0) {
+      document.getElementById("prenom").style.borderColor = "";
+      document.getElementById("prenomErr").style.color=""
+      document.getElementById("prenomErr").innerHTML = "";
     }else{
-        document.getElementById("prenom").style.borderColor = "";
-        document.getElementById("prenomErr").style.color=""
-        document.getElementById("prenomErr").innerHTML = "";
-        delete erreurs.prenom;
+      document.getElementById("prenom").style.borderColor = "red";
+      document.getElementById("prenomErr").style.color="red"
+      document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec plus de 3 caractères</p>`;
+        
+      Object.defineProperty(erreurs, 'prenom', {
+      value: 'renseigner un prenom avec plus de 3 caractères',
+      writable : true,
+      enumerable : true,
+      configurable : true
+      });
     }
+  }else if (nom.length > 50) {
+    document.getElementById("prenom").style.borderColor = "red";
+    document.getElementById("prenomErr").style.color="red"
+    document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec moin de 50 caractères</p>`;
+    Object.defineProperty(erreurs, 'prenom', {
+    value: "renseigner un prenom avec moin de 50 caractères",
+    writable : true,
+    enumerable : true,
+    configurable : true
+    });
+
+  }else{
+    document.getElementById("prenom").style.borderColor = "";
+    document.getElementById("prenomErr").style.color=""
+    document.getElementById("prenomErr").innerHTML = "";
+    delete erreurs.prenom;
+  }
 }
 function validNom(){
-    let nom = form.elements.nom.value
-    if(nom.length < 3) {
-        if (nom.length === 0) {
-            document.getElementById("nom").style.borderColor = "";
-            document.getElementById("nomErr").style.color=""
-            document.getElementById("nomErr").innerHTML = "";
-          }else{
-        document.getElementById("nom").style.borderColor = "red";
-        document.getElementById("nomErr").style.color="red"
-        document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec plus de 3 caractères</p>`;
-        Object.defineProperty(erreurs, 'nom', {
-            value: 'renseigner un nom avec plus de 3 caractères',
-            writable : true,
-            enumerable : true,
-            configurable : true
-        });
-    }
-    }else if (nom.length > 50) {
-        document.getElementById("nom").style.borderColor = "red";
-        document.getElementById("nomErr").style.color="red"
-        document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec moin de 50 caractères</p>`;
-        Object.defineProperty(erreurs, 'nom', {
-            value: 'renseigner un nom avec moin de 50 caractères',
-            writable : true,
-            enumerable : true,
-            configurable : true
-        });
+  let nom = form.elements.nom.value
+  if(nom.length < 3) {
+    if (nom.length === 0) {
+      document.getElementById("nom").style.borderColor = "";
+      document.getElementById("nomErr").style.color=""
+      document.getElementById("nomErr").innerHTML = "";
     }else{
-        document.getElementById("nom").style.borderColor = "";
-        document.getElementById("nomErr").style.color=""
-        document.getElementById("nomErr").innerHTML = "";
-        delete erreurs.nom;
+      document.getElementById("nom").style.borderColor = "red";
+      document.getElementById("nomErr").style.color="red"
+      document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec plus de 3 caractères</p>`;
+      
+      Object.defineProperty(erreurs, 'nom', {
+        value: 'renseigner un nom avec plus de 3 caractères',
+        writable : true,
+        enumerable : true,
+        configurable : true
+      });
     }
+  }else if (nom.length > 50) {
+    document.getElementById("nom").style.borderColor = "red";
+    document.getElementById("nomErr").style.color="red"
+    document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec moin de 50 caractères</p>`;
+    Object.defineProperty(erreurs, 'nom', {
+      value: 'renseigner un nom avec moin de 50 caractères',
+      writable : true,
+      enumerable : true,
+      configurable : true
+    });
+  }else{
+    document.getElementById("nom").style.borderColor = "";
+    document.getElementById("nomErr").style.color=""
+    document.getElementById("nomErr").innerHTML = "";
+    delete erreurs.nom;
+  }
 }
 
 function validPhone(){
@@ -148,6 +150,7 @@ function validEmail(){
 buttonReset.addEventListener('click', function(){
     location.reload();
 })
+// Drag and Drop image==============================================================================
 imageZone.addEventListener('dragover', (event) => {      
     event.preventDefault();
     imageZone.textContent = 'Relacher image';
@@ -212,7 +215,7 @@ inputFile.addEventListener('change', () => {
     file = inputFile.files[0];
     displayImg();
 });
-// Ajouter contact
+// Ajouter contact=================================================================================
 form.addEventListener('submit', function(e){
 
     if(Object.keys(erreurs).length === 0){
@@ -228,7 +231,8 @@ form.addEventListener('submit', function(e){
                 'bio': form.elements.bio.value,
                 'image': fileURL
             };
-
+          
+          // Modifier contact===========================================================
             if(buttonSubmit.textContent === 'Modifier'){
                 localStorage.removeItem('contacts');
                 const contactsUpdated = newcontacts.map(function(contact){
@@ -240,6 +244,7 @@ form.addEventListener('submit', function(e){
                 });
                 localStorage.setItem('contacts', JSON.stringify(contactsUpdated));
                 location.reload();
+              //======================================================================== 
             }else{
 
                 const messagesErreurs = [];
@@ -297,7 +302,7 @@ form.addEventListener('submit', function(e){
 
     }
 });
-
+// Affichage liste des contacts=====================================================================
 if(localStorage.hasOwnProperty('contacts')){
     const newcontacts = JSON.parse(localStorage.getItem('contacts'));
     const conteneurContact = document.querySelector('.block_liste_contacts');
@@ -330,16 +335,11 @@ if(localStorage.hasOwnProperty('contacts')){
 
         conteneurContact.appendChild(divContact);
     }
+// Icone modifier contact===========================================================================
         const iconsEdite = document.querySelectorAll('.icon1');
-        const iconsDelete = document.getElementsByClassName('icon2');
-        const buttonSupprimer = document.getElementById("deleteContact");
-        const AnnulerDelete = document.getElementById("AnnulerDelete");
-
         for(let i = 0 ; i < iconsEdite.length ; i++){
             iconsEdite[i].addEventListener('click', function(){
                 let objetContacts = JSON.parse(localStorage.contacts);
-        
-                form.setAttribute('id', 'formModif');
 
                 let key = this.getAttribute('data-key');
 
@@ -358,15 +358,14 @@ if(localStorage.hasOwnProperty('contacts')){
                 form.elements.bio.value = item.bio;
                 fileURL= item.image;
 
-                // let fileReader = new FileReader()
-                // fileReader.onload = () => {
                 let imgTag = `<img src = "${fileURL}" alt = "" >`;
                 imageZone.innerHTML = imgTag;
-                // }
-                // fileReader.readAsDataURL(file)
-                // console.log(contactImage);
             });
         }
+// Supprimer contact================================================================================
+  const buttonSupprimer = document.getElementById("deleteContact");
+  const AnnulerDelete = document.getElementById("AnnulerDelete");
+  const iconsDelete = document.getElementsByClassName('icon2');
         for(let i = 0 ; i < iconsDelete.length ; i++){
 
             iconsDelete[i].addEventListener('click', function(){
