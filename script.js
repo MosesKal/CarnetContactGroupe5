@@ -162,15 +162,16 @@ imageZone.addEventListener('dragleave', () => {
 imageZone.addEventListener('drop', (event) => {
     event.preventDefault();
     file = event.dataTransfer.files[0];
-    let fileType = file.type
-    let validExt = ['image/jpeg','image/jpg','image/png']
-    if(file.size >5000000){
+    let fileType = file.type;
+    let validExt = ['image/jpeg','image/jpg','image/png'];
+
+    if(file.size >1000000){
         imageZone.style.borderColor = "red"
         imageZone.innerHTML = `<p class="text-image">Déposez la photo ici ou <span class="span-click">Cliquer ici</span></p>`
         document.getElementById("imgErr").style.color="red"
-        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>le poids de l’image doit être inférieur à 5 Mo</p>`;
+        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>le poids de l’image doit être inférieur à 1 Mo</p>`;
         Object.defineProperty(erreurs, 'image', {
-            value: 'le poids de l’image doit être inférieur à 5 Mo',
+            value: 'le poids de l’image doit être inférieur à 1 Mo',
             writable : true,
             enumerable : true,
             configurable : true
@@ -179,9 +180,9 @@ imageZone.addEventListener('drop', (event) => {
         imageZone.style.borderColor = "red"
         imageZone.innerHTML = `<p class="text-image">Déposez la photo ici ou <span class="span-click">Cliquer ici</span></p>`
         document.getElementById("imgErr").style.color="red"
-        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner une image valide</p>`;
+        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>Ce fichier n'est pas une image</p>`;
         Object.defineProperty(erreurs, 'image', {
-            value: 'renseigner une image valide',
+            value: "Le fichier n'est pas une image",
             writable : true,
             enumerable : true,
             configurable : true
@@ -195,7 +196,6 @@ imageZone.addEventListener('drop', (event) => {
         delete erreurs.image;
 }
 });
-
 
 function displayImg(){
     let fileReader = new FileReader()
@@ -336,6 +336,7 @@ if(localStorage.hasOwnProperty('contacts')){
         const iconsEdite = document.querySelectorAll('.icon1');
         const iconsDelete = document.getElementsByClassName('icon2');
         const buttonSupprimer = document.getElementById("deleteContact");
+        const AnnulerDelete = document.getElementById("AnnulerDelete");
 
         for(let i = 0 ; i < iconsEdite.length ; i++){
             iconsEdite[i].addEventListener('click', function(){
@@ -358,13 +359,20 @@ if(localStorage.hasOwnProperty('contacts')){
                 form.elements.groupe.value = item.groupe;
                 form.elements.email.value = item.email;
                 form.elements.bio.value = item.bio;
+                const contactImage = item.image;
+
+                // let fileReader = new FileReader()
+                // fileReader.onload = () => {
+                let imgTag = `<img src = "${contactImage}" alt = "" >`
+                imageZone.innerHTML = imgTag
+                // }
+                // fileReader.readAsDataURL(file)
+                // console.log(contactImage);
             });
         }
-
         for(let i = 0 ; i < iconsDelete.length ; i++){
 
             iconsDelete[i].addEventListener('click', function(){
-                
                 buttonSupprimer.innerHTML = `<span> <a href="#" class="btn btn-danger" data-key="${index}" data-bs-toggle="modal" data-bs-target="#staticBackdrop">supprimer</a></span>`;
                 const key = this.getAttribute('data-key');
 
@@ -377,7 +385,10 @@ if(localStorage.hasOwnProperty('contacts')){
 
                     location.reload();
                 });
-
+                AnnulerDelete.addEventListener('click', function(){
+                    location.reload();
+                })
+                
             });
     
         }
