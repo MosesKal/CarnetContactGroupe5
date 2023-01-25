@@ -194,17 +194,16 @@ imageZone.addEventListener('drop', (event) => {
         document.getElementById("imgErr").innerHTML = "";
         displayImg();
         delete erreurs.image;
-}
+    }
 });
-
 function displayImg(){
     let fileReader = new FileReader()
     fileReader.onload = () => {
-    fileURL = fileReader.result;
-    let imgTag = `<img src = "${fileURL}" alt = "" >`
-    imageZone.innerHTML = imgTag
+        fileURL = fileReader.result;
+        let imgTag = `<img src = "${fileURL}" alt = "" >`;
+        imageZone.innerHTML = imgTag;
     }
-    fileReader.readAsDataURL(file)
+    fileReader.readAsDataURL(file);
 }
 spanClick.onclick = () => {
     inputFile.click();
@@ -240,6 +239,7 @@ form.addEventListener('submit', function(e){
                     }
                 });
                 localStorage.setItem('contacts', JSON.stringify(contactsUpdated));
+                location.reload();
             }else{
 
                 const messagesErreurs = [];
@@ -252,8 +252,7 @@ form.addEventListener('submit', function(e){
                         messagesErreurs.push('Ce mail exist');
                     }
                 }
-                if(messagesErreurs.length != 0){
-
+                if(messagesErreurs.length !== 0){
                     for(index in messagesErreurs){
                         if(messagesErreurs[index] === 'Ce numero existe'){
                             document.getElementById("telephone").style.borderColor = "red";
@@ -268,7 +267,6 @@ form.addEventListener('submit', function(e){
                             e.preventDefault();
                         }
                     }
-
                 }else{
                     localStorage.removeItem('contacts');
                     newcontacts.push({
@@ -282,8 +280,7 @@ form.addEventListener('submit', function(e){
                     });
                     localStorage.setItem('contacts', JSON.stringify(newcontacts));
                 }
-            }
-            
+            } 
         }else{
             const contacts = [];
             contacts.push({                    
@@ -359,12 +356,12 @@ if(localStorage.hasOwnProperty('contacts')){
                 form.elements.groupe.value = item.groupe;
                 form.elements.email.value = item.email;
                 form.elements.bio.value = item.bio;
-                const contactImage = item.image;
+                fileURL= item.image;
 
                 // let fileReader = new FileReader()
                 // fileReader.onload = () => {
-                let imgTag = `<img src = "${contactImage}" alt = "" >`
-                imageZone.innerHTML = imgTag
+                let imgTag = `<img src = "${fileURL}" alt = "" >`;
+                imageZone.innerHTML = imgTag;
                 // }
                 // fileReader.readAsDataURL(file)
                 // console.log(contactImage);
