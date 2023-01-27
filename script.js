@@ -8,35 +8,31 @@ const buttonSubmit = document.getElementById('create');
 const inputFile = document.getElementById('inputFile');
 const erreurs = {};
 
-
+function showErrorMessage(message, elementId, elementErrorId){
+  document.getElementById(elementId).style.borderColor = "red";
+  document.getElementById(elementErrorId).style.color="red"
+  document.getElementById(elementErrorId).innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>${message}</p>`;
+}
 function validPrenom(){
     let prenom =form.elements.prenom.value
     if (prenom.length < 3) {
-        if (prenom.length === 0) {
-            document.getElementById("prenom").style.borderColor = "";
-            document.getElementById("prenomErr").style.color=""
-            document.getElementById("prenomErr").innerHTML = "";
-          }else{
-        document.getElementById("prenom").style.borderColor = "red";
-        document.getElementById("prenomErr").style.color="red"
-        document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec plus de 3 caractères</p>`;
-        Object.defineProperty(erreurs, 'prenom', {
+        erreurs['prenom'] = {
             value: 'renseigner un prenom avec plus de 3 caractères',
             writable : true,
             enumerable : true,
             configurable : true
-        });
-    }
-    }else if (nom.length > 50) {
-        document.getElementById("prenom").style.borderColor = "red";
-        document.getElementById("prenomErr").style.color="red"
-        document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec moin de 50 caractères</p>`;
-        Object.defineProperty(erreurs, 'prenom', {
-            value: "renseigner un prenom avec moin de 50 caractères",
+        }
+
+        showErrorMessage(erreurs.prenom.value, 'prenom', 'prenomErr');
+
+    }else if (prenom.length > 50) {
+            erreurs['prenom'] = {
+            value: 'renseigner un nom avec moins de 50 caractères',
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        }
+        showErrorMessage(erreurs.prenom.value, 'prenom', 'prenomErr');
 
     }else{
         document.getElementById("prenom").style.borderColor = "";
@@ -80,7 +76,6 @@ function validNom(){
         delete erreurs.nom;
     }
 }
-
 function validPhone(){
     let telephone = form.elements.telephone.value
     let phoneReg = /^\d+$/;
@@ -145,9 +140,16 @@ function validEmail(){
         delete erreurs.email;
     }
 }
-buttonReset.addEventListener('click', function(){
-    location.reload();
-})
+function displayImg(){
+    let fileReader = new FileReader()
+    fileReader.onload = () => {
+        fileURL = fileReader.result;
+        let imgTag = `<img src = "${fileURL}" alt = "" >`;
+        imageZone.innerHTML = imgTag;
+    }
+    fileReader.readAsDataURL(file);
+} 
+
 imageZone.addEventListener('dragover', (event) => {      
     event.preventDefault();
     imageZone.textContent = 'Relacher image';
@@ -196,15 +198,7 @@ imageZone.addEventListener('drop', (event) => {
         delete erreurs.image;
     }
 });
-function displayImg(){
-    let fileReader = new FileReader()
-    fileReader.onload = () => {
-        fileURL = fileReader.result;
-        let imgTag = `<img src = "${fileURL}" alt = "" >`;
-        imageZone.innerHTML = imgTag;
-    }
-    fileReader.readAsDataURL(file);
-}
+
 spanClick.onclick = () => {
     inputFile.click();
 }
@@ -212,6 +206,11 @@ inputFile.addEventListener('change', () => {
     file = inputFile.files[0];
     displayImg();
 });
+
+// buttonReset.addEventListener('click', function(){
+//     location.reload();
+// });
+
 // Ajouter contact
 form.addEventListener('submit', function(e){
 
