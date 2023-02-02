@@ -8,120 +8,102 @@ const buttonSubmit = document.getElementById('create');
 const inputFile = document.getElementById('inputFile');
 const erreurs = {};
 
-// Fonction de validation champs====================================================================
-function validPrenom(){
-  let prenom =form.elements.prenom.value
-  if (prenom.length < 3) {
-    if (prenom.length === 0) {
-      document.getElementById("prenom").style.borderColor = "";
-      document.getElementById("prenomErr").style.color=""
-      document.getElementById("prenomErr").innerHTML = "";
-    }else{
-      document.getElementById("prenom").style.borderColor = "red";
-      document.getElementById("prenomErr").style.color="red"
-      document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec plus de 3 caractères</p>`;
-        
-      Object.defineProperty(erreurs, 'prenom', {
-      value: 'renseigner un prenom avec plus de 3 caractères',
-      writable : true,
-      enumerable : true,
-      configurable : true
-      });
-    }
-  }else if (nom.length > 50) {
-    document.getElementById("prenom").style.borderColor = "red";
-    document.getElementById("prenomErr").style.color="red"
-    document.getElementById("prenomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un prenom avec moin de 50 caractères</p>`;
-    Object.defineProperty(erreurs, 'prenom', {
-    value: "renseigner un prenom avec moin de 50 caractères",
-    writable : true,
-    enumerable : true,
-    configurable : true
-    });
+// Fonctions de validation===========================================================
+function showErrorMessage(message, elementId, elementErrorId){
 
+  if(message.length !== 0){
+    document.getElementById(elementId).style.borderColor = "red";
+    document.getElementById(elementErrorId).style.color="red"
+    document.getElementById(elementErrorId).innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation">       </i></span>${message}</p>`;
   }else{
-    document.getElementById("prenom").style.borderColor = "";
-    document.getElementById("prenomErr").style.color=""
-    document.getElementById("prenomErr").innerHTML = "";
-    delete erreurs.prenom;
+    document.getElementById(elementId).style.borderColor = "";
+    document.getElementById(elementErrorId).style.color=""
+    document.getElementById(elementErrorId).innerHTML = "";
   }
+}
+function validPrenom(){
+    let prenom =form.elements.prenom.value
+    if (prenom.length < 3) {
+        erreurs['prenom'] = {
+            value: 'renseigner un prenom avec plus de 3 caractères',
+            writable : true,
+            enumerable : true,
+            configurable : true
+        }
+
+        showErrorMessage(erreurs.prenom.value, 'prenom', 'prenomErr');
+
+    }else if (prenom.length > 50) {
+            erreurs['prenom'] = {
+            value: 'renseigner un nom avec moins de 50 caractères',
+            writable : true,
+            enumerable : true,
+            configurable : true
+        }
+        showErrorMessage(erreurs.prenom.value, 'prenom', 'prenomErr');
+
+    }else{
+      showErrorMessage('', 'prenom', 'prenomErr');
+        delete erreurs.prenom;
+    }
 }
 function validNom(){
-  let nom = form.elements.nom.value
-  if(nom.length < 3) {
-    if (nom.length === 0) {
-      document.getElementById("nom").style.borderColor = "";
-      document.getElementById("nomErr").style.color=""
-      document.getElementById("nomErr").innerHTML = "";
-    }else{
-      document.getElementById("nom").style.borderColor = "red";
-      document.getElementById("nomErr").style.color="red"
-      document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec plus de 3 caractères</p>`;
-      
-      Object.defineProperty(erreurs, 'nom', {
-        value: 'renseigner un nom avec plus de 3 caractères',
-        writable : true,
-        enumerable : true,
-        configurable : true
-      });
+    let nom = form.elements.nom.value
+    if(nom.length < 3) {
+        if (nom.length === 0) {
+          showNoError(nom, nomErr)
+          }else{
+       erreurs['nom']= {
+            value: 'renseigner un nom avec plus de 3 caractères',
+            writable : true,
+            enumerable : true,
+            configurable : true
+        }
+           showErrorMessage(erreurs.nom.value, 'nom', 'nomErr');
     }
-  }else if (nom.length > 50) {
-    document.getElementById("nom").style.borderColor = "red";
-    document.getElementById("nomErr").style.color="red"
-    document.getElementById("nomErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un nom avec moin de 50 caractères</p>`;
-    Object.defineProperty(erreurs, 'nom', {
-      value: 'renseigner un nom avec moin de 50 caractères',
-      writable : true,
-      enumerable : true,
-      configurable : true
-    });
-  }else{
-    document.getElementById("nom").style.borderColor = "";
-    document.getElementById("nomErr").style.color=""
-    document.getElementById("nomErr").innerHTML = "";
-    delete erreurs.nom;
-  }
+    }else if (nom.length > 50) {
+        erreurs['nom']= {
+            value: 'renseigner un nom avec moin de 50 caractères',
+            writable : true,
+            enumerable : true,
+            configurable : true
+        }
+      showErrorMessage(erreurs.nom.value, 'nom', 'nomErr');
+    }else{
+      showErrorMessage('', 'nom', 'nomErr');
+        delete erreurs.nom;
+    }
 }
-
 function validPhone(){
     let telephone = form.elements.telephone.value
     let phoneReg = /^\d+$/;
     let validPrefixes = ["084", "085", "080", "089", "081", "082", "083", "099", "097", "090"];
     if(!phoneReg.test(telephone)) {
-        document.getElementById("telephone").style.borderColor = "red";
-        document.getElementById("phoneErr").style.color="red"
-        document.getElementById("phoneErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un numéro de téléphone valide</p>`;
-        Object.defineProperty(erreurs, 'phone', {
+        erreurs['phone']= {
             value: 'renseigner un numéro de téléphone valide',
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        };
+      showErrorMessage(erreurs.phone.value, 'telephone', 'phoneErr');
     }else if (telephone.length !== 10) {
-        document.getElementById("telephone").style.borderColor = "red";
-        document.getElementById("phoneErr").style.color="red"
-        document.getElementById("phoneErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un numéro de téléphone avec 10 chiffres</p>`;
-
-        Object.defineProperty(erreurs, 'phone', {
+         erreurs['phone']= {
             value: 'renseigner un numéro de téléphone avec 10 chiffres',
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        };
+       showErrorMessage(erreurs.phone.value, 'telephone', 'phoneErr');
     }else if (!validPrefixes.includes(telephone.substring(0, 3))) {
-        document.getElementById("telephone").style.borderColor = "red";
-        document.getElementById("phoneErr").style.color="red";
-        document.getElementById("phoneErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>renseigner un numéro de téléphone au format valide</p>`;
-        Object.defineProperty(erreurs, 'phone', {
+        erreurs['phone']= {
             value: 'renseigner un numéro de téléphone au format valide',
             writable : true,
             enumerable : true,
             configurable : true
-        });  
+        };
+       showErrorMessage(erreurs.phone.value, 'telephone', 'phoneErr');
     }else{
-        document.getElementById("telephone").style.borderColor = "";
-        document.getElementById("phoneErr").style.color=""
-        document.getElementById("phoneErr").innerHTML = "";
+      showErrorMessage('', 'telephone', 'phoneErr');
         delete erreurs.phone;
     }
 }
@@ -129,28 +111,36 @@ function validEmail(){
     let email = form.elements.email.value
     const emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(email)) {
-        document.getElementById("email").style.borderColor = "red";
-        document.getElementById("emailErr").style.color="red"
-        document.getElementById("emailErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>Veuillez saisir une adresse email valide</p>`;
-        Object.defineProperty(erreurs, 'email', {
+        erreurs['email'] = {
             value: 'Veuillez saisir une adresse email valide',
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        }
+      showErrorMessage(erreurs.email.value, 'email', 'emailErr');
     }
     else {
-
-        document.getElementById("email").style.borderColor = "";
-        document.getElementById("emailErr").style.color=""
-        document.getElementById("emailErr").innerHTML = "";
+      showErrorMessage('', 'email', 'emailErr');
         delete erreurs.email;
     }
 }
-buttonReset.addEventListener('click', function(){
-    location.reload();
-})
-// Drag and Drop image==============================================================================
+// Zone image========================================================================
+function displayImg(){
+    let fileReader = new FileReader()
+    fileReader.onload = () => {
+        fileURL = fileReader.result;
+        let imgTag = `<img src = "${fileURL}" alt = "" >`;
+        imageZone.innerHTML = imgTag;
+    }
+    fileReader.readAsDataURL(file);
+} 
+function showErreursImage(message, elementErrorId) {
+  imageZone.style.borderColor = "red"
+  imageZone.innerHTML = `<p class="text-image">Déposez la photo ici ou <span class="span-click">Cliquer ici</span></p>`
+  document.getElementById(elementErrorId).style.color="red"
+  document.getElementById(elementErrorId).innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>${message}</p>`;
+}
+
 imageZone.addEventListener('dragover', (event) => {      
     event.preventDefault();
     imageZone.textContent = 'Relacher image';
@@ -169,27 +159,21 @@ imageZone.addEventListener('drop', (event) => {
     let validExt = ['image/jpeg','image/jpg','image/png'];
 
     if(file.size >1000000){
-        imageZone.style.borderColor = "red"
-        imageZone.innerHTML = `<p class="text-image">Déposez la photo ici ou <span class="span-click">Cliquer ici</span></p>`
-        document.getElementById("imgErr").style.color="red"
-        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>le poids de l’image doit être inférieur à 1 Mo</p>`;
-        Object.defineProperty(erreurs, 'image', {
+        erreurs['image'] = {
             value: 'le poids de l’image doit être inférieur à 1 Mo',
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        }
+      showErreursImage(erreurs.image.value, 'imgErr')
     }else if(!validExt.includes(fileType)){
-        imageZone.style.borderColor = "red"
-        imageZone.innerHTML = `<p class="text-image">Déposez la photo ici ou <span class="span-click">Cliquer ici</span></p>`
-        document.getElementById("imgErr").style.color="red"
-        document.getElementById("imgErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>Ce fichier n'est pas une image</p>`;
-        Object.defineProperty(erreurs, 'image', {
-            value: "Le fichier n'est pas une image",
+         erreurs['image'] = {
+            value: "Ce fichier n'est pas une image",
             writable : true,
             enumerable : true,
             configurable : true
-        });
+        }
+      showErreursImage(erreurs.image.value, 'imgErr')
     }
     else{
         imageZone.style.borderColor = ""
@@ -199,15 +183,7 @@ imageZone.addEventListener('drop', (event) => {
         delete erreurs.image;
     }
 });
-function displayImg(){
-    let fileReader = new FileReader()
-    fileReader.onload = () => {
-        fileURL = fileReader.result;
-        let imgTag = `<img src = "${fileURL}" alt = "" >`;
-        imageZone.innerHTML = imgTag;
-    }
-    fileReader.readAsDataURL(file);
-}
+
 spanClick.onclick = () => {
     inputFile.click();
 }
@@ -215,7 +191,12 @@ inputFile.addEventListener('change', () => {
     file = inputFile.files[0];
     displayImg();
 });
-// Ajouter contact=================================================================================
+
+buttonReset.addEventListener('click', function(){
+    location.reload();
+});
+
+// Ajouter contact===================================================================
 form.addEventListener('submit', function(e){
 
     if(Object.keys(erreurs).length === 0){
@@ -231,12 +212,12 @@ form.addEventListener('submit', function(e){
                 'bio': form.elements.bio.value,
                 'image': fileURL
             };
-          
-          // Modifier contact===========================================================
+            // Modifier contact======================================================
             if(buttonSubmit.textContent === 'Modifier'){
                 localStorage.removeItem('contacts');
+              const key = this.getAttribute('data-key');
                 const contactsUpdated = newcontacts.map(function(contact){
-                    if(contact.telephone === `${form.elements.telephone.value}`){
+                    if(newcontacts[index].telephone === form.elements.telephone.value){
                         return contactUpdate;
                     }else{
                         return contact;
@@ -244,7 +225,7 @@ form.addEventListener('submit', function(e){
                 });
                 localStorage.setItem('contacts', JSON.stringify(contactsUpdated));
                 location.reload();
-              //======================================================================== 
+              // ====================================================================
             }else{
 
                 const messagesErreurs = [];
@@ -266,9 +247,9 @@ form.addEventListener('submit', function(e){
                             e.preventDefault();
                         }
                         if(messagesErreurs[index] === 'Ce mail exist'){
-                            document.getElementById("email").style.borderColor = "red";
+                          document.getElementById("email").style.borderColor = "red";
                             document.getElementById("emailErr").style.color="red"
-                            document.getElementById("emailErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>Ce mail existe</p>`;
+                            document.getElementById("emailErr").innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>Ce mail existe</p>`
                             e.preventDefault();
                         }
                     }
@@ -302,7 +283,7 @@ form.addEventListener('submit', function(e){
 
     }
 });
-// Affichage liste des contacts=====================================================================
+// Afficher contacts=================================================================
 if(localStorage.hasOwnProperty('contacts')){
     const newcontacts = JSON.parse(localStorage.getItem('contacts'));
     const conteneurContact = document.querySelector('.block_liste_contacts');
@@ -335,11 +316,13 @@ if(localStorage.hasOwnProperty('contacts')){
 
         conteneurContact.appendChild(divContact);
     }
-// Icone modifier contact===========================================================================
         const iconsEdite = document.querySelectorAll('.icon1');
+      
+// Icone modifier contact============================================================
         for(let i = 0 ; i < iconsEdite.length ; i++){
             iconsEdite[i].addEventListener('click', function(){
                 let objetContacts = JSON.parse(localStorage.contacts);
+        
 
                 let key = this.getAttribute('data-key');
 
@@ -362,10 +345,10 @@ if(localStorage.hasOwnProperty('contacts')){
                 imageZone.innerHTML = imgTag;
             });
         }
-// Supprimer contact================================================================================
-  const buttonSupprimer = document.getElementById("deleteContact");
-  const AnnulerDelete = document.getElementById("AnnulerDelete");
-  const iconsDelete = document.getElementsByClassName('icon2');
+// Supprimer contact=================================================================
+    const iconsDelete = document.getElementsByClassName('icon2');
+    const buttonSupprimer = document.getElementById("deleteContact");
+    const AnnulerDelete = document.getElementById("AnnulerDelete");
         for(let i = 0 ; i < iconsDelete.length ; i++){
 
             iconsDelete[i].addEventListener('click', function(){
