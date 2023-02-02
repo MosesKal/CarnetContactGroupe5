@@ -10,14 +10,16 @@ const erreurs = {};
 
 // Fonctions de validation===========================================================
 function showErrorMessage(message, elementId, elementErrorId){
-  document.getElementById(elementId).style.borderColor = "red";
-  document.getElementById(elementErrorId).style.color="red"
-  document.getElementById(elementErrorId).innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation"></i></span>${message}</p>`;
-}
-function showNoError(elementId, elementErrorId) {
-  document.getElementById(elementId).style.borderColor = "";
-  document.getElementById(elementErrorId).style.color=""
-  document.getElementById(elementErrorId).innerHTML = "";
+
+  if(message.length !== 0){
+    document.getElementById(elementId).style.borderColor = "red";
+    document.getElementById(elementErrorId).style.color="red"
+    document.getElementById(elementErrorId).innerHTML = `<p><span class="warning__Icon"><i class="fa-solid fa-circle-exclamation">       </i></span>${message}</p>`;
+  }else{
+    document.getElementById(elementId).style.borderColor = "";
+    document.getElementById(elementErrorId).style.color=""
+    document.getElementById(elementErrorId).innerHTML = "";
+  }
 }
 function validPrenom(){
     let prenom =form.elements.prenom.value
@@ -41,7 +43,7 @@ function validPrenom(){
         showErrorMessage(erreurs.prenom.value, 'prenom', 'prenomErr');
 
     }else{
-      showNoError('prenom', 'prenomErr')
+      showErrorMessage('', 'prenom', 'prenomErr');
         delete erreurs.prenom;
     }
 }
@@ -68,7 +70,7 @@ function validNom(){
         }
       showErrorMessage(erreurs.nom.value, 'nom', 'nomErr');
     }else{
-      showNoError('nom', 'nomErr')
+      showErrorMessage('', 'nom', 'nomErr');
         delete erreurs.nom;
     }
 }
@@ -101,7 +103,7 @@ function validPhone(){
         };
        showErrorMessage(erreurs.phone.value, 'telephone', 'phoneErr');
     }else{
-      showNoError('telephone', 'phoneErr')
+      showErrorMessage('', 'telephone', 'phoneErr');
         delete erreurs.phone;
     }
 }
@@ -118,7 +120,7 @@ function validEmail(){
       showErrorMessage(erreurs.email.value, 'email', 'emailErr');
     }
     else {
-      showNoError('email', 'emailErr')
+      showErrorMessage('', 'email', 'emailErr');
         delete erreurs.email;
     }
 }
@@ -215,7 +217,7 @@ form.addEventListener('submit', function(e){
                 localStorage.removeItem('contacts');
               const key = this.getAttribute('data-key');
                 const contactsUpdated = newcontacts.map(function(contact){
-                    if(contact.length -1 === key){
+                    if(newcontacts[index].telephone === form.elements.telephone.value){
                         return contactUpdate;
                     }else{
                         return contact;
